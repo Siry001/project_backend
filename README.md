@@ -17,7 +17,7 @@ The system allows users to manage workouts, log training sessions, track progres
 
 ⸻
 
-###Tech Stack
+### Tech Stack
 
 - Laravel
 - Laravel Sanctum
