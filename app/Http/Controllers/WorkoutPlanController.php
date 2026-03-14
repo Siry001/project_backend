@@ -9,8 +9,10 @@ class WorkoutPlanController extends Controller
 {
     public function index(Request $request)
     {
-        return $request->user()->workoutPlans()->with('workouts')->get();
-        
+        return $request->user()
+            ->workoutPlans()
+            ->with('workouts')
+            ->get();
     }
 
     public function store(Request $request)
@@ -26,18 +28,25 @@ class WorkoutPlanController extends Controller
         return response()->json($plan, 201);
     }
 
-    public function show(WorkoutPlan $workoutPlan)
+    public function show(Request $request, WorkoutPlan $workoutPlan)
     {
-        return $workoutPlan->load('workouts');
+        if ($workoutPlan->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
+        return $workoutPlan->load('workouts');
     }
 
-    public function destroy(WorkoutPlan $workoutPlan)
+    public function destroy(Request $request, WorkoutPlan $workoutPlan)
     {
+        if ($workoutPlan->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $workoutPlan->delete();
 
         return response()->json([
-            'message' => 'Plan deleted'
+            'message' => 'Plan deleted successfully'
         ]);
     }
 }

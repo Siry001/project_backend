@@ -9,7 +9,7 @@ class DietPlanController extends Controller
 {
     public function index(Request $request)
     {
-        return DietPlan::where('user_id', $request->user()->id)->get();
+        return $request->user()->dietPlans;
     }
 
     public function store(Request $request)
@@ -26,20 +26,41 @@ class DietPlanController extends Controller
         return response()->json($plan, 201);
     }
 
-    public function show(DietPlan $dietPlan)
+    public function show(Request $request, DietPlan $dietPlan)
     {
+        if ($dietPlan->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         return $dietPlan;
     }
 
     public function update(Request $request, DietPlan $dietPlan)
     {
-        $dietPlan->update($request->all());
+        if ($dietPlan->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $data = $request->validate([
+            'title' => 'string',
+            'description' => 'nullable|string'
+        ]);
+
+        $dietPlan->update($data);
+
         return $dietPlan;
     }
 
-    public function destroy(DietPlan $dietPlan)
+    public function destroy(Request $request, DietPlan $dietPlan)
     {
+        if ($dietPlan->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $dietPlan->delete();
-        return response()->json(['message' => 'Deleted']);
+
+        return response()->json([
+            'message' => 'Plan deleted successfully'
+        ]);
     }
 }

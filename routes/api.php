@@ -26,8 +26,10 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    // Profile
     Route::get('/profile', function (Request $request) {
         return $request->user();
     });
@@ -71,5 +73,4 @@ Route::middleware('auth:sanctum')->group(function () {
     */
 
     Route::get('/workouts/{id}/progress', [WorkoutController::class, 'progress']);
-
 });
