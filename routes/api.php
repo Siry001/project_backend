@@ -8,6 +8,7 @@ use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\WorkoutPlanController;
 use App\Http\Controllers\WorkoutLogController;
 use App\Http\Controllers\DietPlanController;
+use App\Http\Controllers\AiWorkoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,5 +72,7 @@ Route::middleware('auth:sanctum')->group(function () {
     */
 
     Route::get('/workouts/{id}/progress', [WorkoutController::class, 'progress']);
+
+    Route::post('/workouts/ai-generate', [AiWorkoutController::class, 'generate']);
 
 });
