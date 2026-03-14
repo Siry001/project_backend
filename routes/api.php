@@ -10,69 +10,63 @@ use App\Http\Controllers\WorkoutLogController;
 use App\Http\Controllers\DietPlanController;
 use App\Http\Controllers\AiWorkoutController;
 
-/*
-|--------------------------------------------------------------------------
-| Public Routes
-|--------------------------------------------------------------------------
-*/
+/* |-------------------------------------------------------------------------- | Public Routes |-------------------------------------------------------------------------- */
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-
-/*
-|--------------------------------------------------------------------------
-| Protected Routes (Sanctum)
-|--------------------------------------------------------------------------
-*/
+Route::post('/register', [AuthController::class , 'register']);
+Route::post('/login', [AuthController::class , 'login']);
+Route::post('/ai-generate', [AiWorkoutController::class , 'generate']);
+/* |-------------------------------------------------------------------------- | Protected Routes (Sanctum) |-------------------------------------------------------------------------- */
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class , 'logout']);
 
     Route::get('/profile', function (Request $request) {
-        return $request->user();
-    });
+            return $request->user();
+        }
+        );
 
-    /*
-    |--------------------------------------------------------------------------
-    | Workouts
-    |--------------------------------------------------------------------------
-    */
+        /*
+     |--------------------------------------------------------------------------
+     | Workouts
+     |--------------------------------------------------------------------------
+     */
 
-    Route::apiResource('workouts', WorkoutController::class);
+        Route::apiResource('workouts', WorkoutController::class);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Workout Plans
-    |--------------------------------------------------------------------------
-    */
+        /*
+     |--------------------------------------------------------------------------
+     | Workout Plans
+     |--------------------------------------------------------------------------
+     */
 
-    Route::apiResource('plans', WorkoutPlanController::class);
+        Route::apiResource('plans', WorkoutPlanController::class);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Workout Logs
-    |--------------------------------------------------------------------------
-    */
+        /*
+     |--------------------------------------------------------------------------
+     | Workout Logs
+     |--------------------------------------------------------------------------
+     */
 
-    Route::apiResource('logs', WorkoutLogController::class);
+        Route::apiResource('logs', WorkoutLogController::class);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Diet Plans
-    |--------------------------------------------------------------------------
-    */
+        /*
+     |--------------------------------------------------------------------------
+     | Diet Plans
+     |--------------------------------------------------------------------------
+     */
 
-    Route::apiResource('diet-plans', DietPlanController::class);
+        Route::apiResource('diet-plans', DietPlanController::class);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Workout Progress
-    |--------------------------------------------------------------------------
-    */
+        /*
+     |--------------------------------------------------------------------------
+     | Workout Progress
+     |--------------------------------------------------------------------------
+     */
 
-    Route::get('/workouts/{id}/progress', [WorkoutController::class, 'progress']);
+        Route::get('/workouts/{id}/progress', [WorkoutController::class , 'progress']);
 
-    Route::post('/workouts/ai-generate', [AiWorkoutController::class, 'generate']);
 
+
+    
 });
