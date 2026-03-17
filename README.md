@@ -1,240 +1,119 @@
-# Gym Backend API
+# 🏋️ Gym Backend API (Laravel)
 
-A RESTful backend API for a fitness tracking application built with **Laravel**.
+A RESTful backend system for a fitness application that allows users to manage workouts, track progress, and generate AI-powered workout and diet plans.
 
-This project was developed as part of a **System Analysis course** and demonstrates how a backend system can manage workouts, workout plans, diet plans, and user progress tracking.
+⸻
 
----
+🚀 Features
 
-# Project Overview
+- Clean JSON structure optimized for mobile apps
 
-The Gym Backend API provides a backend system that allows fitness applications (mobile or web) to manage user training data efficiently.
+⸻
 
-The system allows users to:
+🔐 Authentication
+	•	Register / Login using Laravel Sanctum
+	•	Token-based authentication
 
-- Register and login securely
-- Manage workouts
-- Log workout sessions
-- Track workout progress
-- Create workout plans
-- Create diet plans
+⸻
 
-The API follows **RESTful architecture** and returns **JSON responses** for easy integration with frontend applications.
+💪 Workouts
+	•	Create, update, delete workouts
+	•	Track workout progress
+	•	Group workouts by day
 
----
+⸻
 
-# Tech Stack
+🧠 AI Workout Generator
 
-### Framework
-- Laravel
+Generate a full workout plan using AI based on:
+	•	Goal (bulking, cutting, etc.)
+	•	Level (beginner, intermediate, advanced)
+	•	Number of days
 
-### Authentication
-- Laravel Sanctum
+✅ Stored in database
+✅ Returned grouped by day
 
-### Database
-- SQLite
+⸻
 
-### Development Tools
-- Git
-- GitHub
-- Postman
+🥗 AI Diet Generator
 
----
+Generate a diet plan using AI based on:
+	•	Goal
+	•	Weight
+	•	Number of meals
 
-# System Architecture
+✅ Stored in database
+✅ Grouped by meals (Breakfast, Lunch…)
+✅ Includes total calories per meal
 
-The system follows a layered backend architecture.
-
-Client Application  
-↓  
-API Routes  
-↓  
-Controllers  
-↓  
-Models  
-↓  
-Database
-
-This structure keeps the system maintainable and scalable.
-
----
-
-# Database Structure
-
-Main tables:
-
-- users
-- workouts
-- workout_logs
-- workout_plans
-- diet_plans
-- personal_access_tokens
-
-Relationships:
-
-User  
-├── Workouts  
-│   └── Workout Logs  
-├── Workout Plans  
-└── Diet Plans  
-
-Workout Plan  
-└── Workouts  
-
-Workout  
-└── Workout Logs  
-
----
-
-# Authentication
-
-Authentication is implemented using **Laravel Sanctum**.
-
-Users receive an authentication token after login.
-
-This token must be included in protected requests.
-
-Example header:
-
+📊 Example Diet Response
 ```
-Authorization: Bearer YOUR_ACCESS_TOKEN
-```
----
-
-# API Endpoints
-
-## Authentication
-
-POST /api/register  
-POST /api/login  
-POST /api/logout  
-
----
-
-## Workouts
-
-GET /api/workouts  
-POST /api/workouts  
-GET /api/workouts/{id}  
-PUT /api/workouts/{id}  
-DELETE /api/workouts/{id}
-
----
-
-## Workout Logs
-
-POST /api/logs  
-GET /api/logs  
-
-Stored data includes:
-
-- weight
-- reps
-- sets
-- performed_at
-
----
-
-## Workout Plans
-
-GET /api/plans  
-POST /api/plans  
-GET /api/plans/{id}  
-DELETE /api/plans/{id}
-
----
-
-## Diet Plans
-
-GET /api/diet-plans  
-POST /api/diet-plans  
-PUT /api/diet-plans/{id}  
-DELETE /api/diet-plans/{id}
-
----
-
-## Progress Tracking
-
-GET /api/workouts/{id}/progress
-
-
-Example response:
-```json
 {
-  "workout_id": 1,
-  "total_sessions": 3,
-  "best_weight": 90,
-  "last_session": {
-    "weight": 90,
-    "reps": 8,
-    "sets": 4,
-    "performed_at": "2026-03-09"
-  }
+    "Breakfast": {
+      "foods": [
+        { "name": "Oats", "calories": 300 },
+        { "name": "Banana", "calories": 100 }
+      ],
+      "total_calories": 400
+    }
 }
 ```
+🛠️ Tech Stack
+	•	Laravel
+	•	SQLite (can be switched to MySQL)
+	•	Laravel Sanctum
+	•	OpenRouter AI API
 
-# Security Improvements
-
-The following improvements were implemented to enhance API security:
--	Added authorization checks to prevent users from accessing other users’ data
--	Secured show, update, and delete endpoints
--	Ensured workouts, plans, and diet plans are scoped to the authenticated user
--	Protected the progress endpoint from unauthorized access
-
-
-# Recent Backend Improvements
-
-Recent backend changes include:
--	Fixed authorization logic in controllers
--	Added proper Eloquent relationships between models
--	Improved progress tracking logic
--	Cleaned controller validation
--	Refactored queries to use Eloquent relationships
--	Ensured API endpoints only return data belonging to the authenticated user
-
-# Running the Project
-
-Clone the repository:
-```
-git clone <repository_url>
-```
-Install dependencies:
-```
+  ⚙️ Installation
+  ```
+  git clone https://github.com/YOUR_USERNAME/gym-backend.git
+cd gym-backend
 composer install
-```
-Run migrations:
-```
+cp .env.example .env
+php artisan key:generate
 php artisan migrate
 ```
-Start the development server:
+
+🔑 Environment Variables
+
+Add your OpenRouter API key:
+```
+OPENROUTER_API_KEY=your_api_key_here
+```
+
+▶️ Run Server
 ```
 php artisan serve
 ```
-The API will run on:
-```
-http://127.0.0.1:8000
-```
+📡 API Endpoints
 
-# Testing the API
+Auth
+	•	POST /api/register
+	•	POST /api/login
 
-You can test the API using Postman.
+⸻
 
-Example login request: POST /api/login
+Workout AI
+	•	POST /api/ai/workout
 
-The response will include an authentication token.
+⸻
 
-Use the token in protected requests: 
-```
-Authorization: Bearer YOUR_ACCESS_TOKEN
-```
-# Project Purpose
+Diet AI
+	•	POST /api/ai/diet
 
-This project demonstrates:
--	REST API design
--	Backend architecture
--	Authentication using Laravel Sanctum
--	Database relationships using Eloquent
--	Secure API design
+⸻
 
-It was developed as part of a System Analysis course project.
->>>>>>> bebce09 (Improve README formatting)
+Diet Plans
+	•	GET /api/diet-plans
+	•	GET /api/diet-plans/{id}
+
+⸻
+
+📱 Next Step
+
+Frontend mobile app using Flutter.
+
+⸻
+
+## 👨‍💻 Author
+Siry - Backend Developer
