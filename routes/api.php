@@ -8,6 +8,7 @@ use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\WorkoutPlanController;
 use App\Http\Controllers\WorkoutLogController;
 use App\Http\Controllers\DietPlanController;
+use App\Http\Controllers\AIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,6 @@ Route::middleware('auth:sanctum')->group(function () {
     | Workouts
     |--------------------------------------------------------------------------
     */
-
     Route::apiResource('workouts', WorkoutController::class);
 
     /*
@@ -47,7 +47,6 @@ Route::middleware('auth:sanctum')->group(function () {
     | Workout Plans
     |--------------------------------------------------------------------------
     */
-
     Route::apiResource('plans', WorkoutPlanController::class);
 
     /*
@@ -55,7 +54,6 @@ Route::middleware('auth:sanctum')->group(function () {
     | Workout Logs
     |--------------------------------------------------------------------------
     */
-
     Route::apiResource('logs', WorkoutLogController::class);
 
     /*
@@ -63,7 +61,6 @@ Route::middleware('auth:sanctum')->group(function () {
     | Diet Plans
     |--------------------------------------------------------------------------
     */
-
     Route::apiResource('diet-plans', DietPlanController::class);
 
     /*
@@ -71,6 +68,17 @@ Route::middleware('auth:sanctum')->group(function () {
     | Workout Progress
     |--------------------------------------------------------------------------
     */
-
     Route::get('/workouts/{id}/progress', [WorkoutController::class, 'progress']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | AI Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('ai')->group(function () {
+
+        Route::post('/workout', [AIController::class, 'generateWorkout']);
+        Route::post('/diet', [AIController::class, 'generateDiet']);
+
+    });
 });
