@@ -6,7 +6,7 @@ A RESTful backend system for a fitness application that allows users to manage w
 
 ## 📊 System Design
 
-![System Design](Docs/system-design.png)
+![System Design](Docs/screen_system.drawio.png)
 
 👉 [View Full System Design Diagram](Docs/System-Design.drawio.pdf)
 
