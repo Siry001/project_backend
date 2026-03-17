@@ -4,6 +4,16 @@ A RESTful backend system for a fitness application that allows users to manage w
 
 ⸻
 
+## 📊 System Design
+
+![System Design](Docs/system-design.png)
+
+👉 [View Full System Design Diagram](Docs/System-Design.drawio.pdf)
+
+This diagram represents the main system interactions including user actions, AI integration, and backend processing.
+
+⸻
+
 🚀 Features
 
 - Clean JSON structure optimized for mobile apps
@@ -11,40 +21,40 @@ A RESTful backend system for a fitness application that allows users to manage w
 ⸻
 
 🔐 Authentication
-	•	Register / Login using Laravel Sanctum
-	•	Token-based authentication
+-	Register / Login using Laravel Sanctum
+-	Token-based authentication
 
 ⸻
 
 💪 Workouts
-	•	Create, update, delete workouts
-	•	Track workout progress
-	•	Group workouts by day
+-	Create, update, delete workouts
+-	Track workout progress
+-	Group workouts by day
 
 ⸻
 
 🧠 AI Workout Generator
 
 Generate a full workout plan using AI based on:
-	•	Goal (bulking, cutting, etc.)
-	•	Level (beginner, intermediate, advanced)
-	•	Number of days
+-	Goal (bulking, cutting, etc.)
+-	Level (beginner, intermediate, advanced)
+-	Number of days
 
-✅ Stored in database
-✅ Returned grouped by day
+- ✅ Stored in database
+- ✅ Returned grouped by day
 
 ⸻
 
 🥗 AI Diet Generator
 
 Generate a diet plan using AI based on:
-	•	Goal
-	•	Weight
-	•	Number of meals
+-	Goal
+-	Weight
+-	Number of meals
 
-✅ Stored in database
-✅ Grouped by meals (Breakfast, Lunch…)
-✅ Includes total calories per meal
+- ✅ Stored in database
+- ✅ Grouped by meals (Breakfast, Lunch…)
+- ✅ Includes total calories per meal
 
 📊 Example Diet Response
 ```
@@ -59,10 +69,10 @@ Generate a diet plan using AI based on:
 }
 ```
 🛠️ Tech Stack
-	•	Laravel
-	•	SQLite (can be switched to MySQL)
-	•	Laravel Sanctum
-	•	OpenRouter AI API
+-	Laravel
+-	SQLite (can be switched to MySQL)
+-	Laravel Sanctum
+-	OpenRouter AI API
 
   ⚙️ Installation
   ```
@@ -88,24 +98,24 @@ php artisan serve
 📡 API Endpoints
 
 Auth
-	•	POST /api/register
-	•	POST /api/login
+-	POST /api/register
+-	POST /api/login
 
 ⸻
 
 Workout AI
-	•	POST /api/ai/workout
+-	POST /api/ai/workout
 
 ⸻
 
 Diet AI
-	•	POST /api/ai/diet
+-	POST /api/ai/diet
 
 ⸻
 
 Diet Plans
-	•	GET /api/diet-plans
-	•	GET /api/diet-plans/{id}
+-	GET /api/diet-plans
+-	GET /api/diet-plans/{id}
 
 ⸻
 
