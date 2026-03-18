@@ -2,128 +2,157 @@
 
 A RESTful backend system for a fitness application that allows users to manage workouts, track progress, and generate AI-powered workout and diet plans.
 
-⸻
+---
+
+## 📌 Project Overview
+
+A RESTful backend API built with Laravel for a fitness application that manages workouts, tracks progress, and generates AI-powered workout and diet plans.
+
+This project was developed as part of a System Analysis course.
+
+---
 
 ## 📊 System Design
 
 ![System Design](Docs/screen_system.drawio.png)
 
-👉 [View Full System Design Diagram](Docs/System-Design.drawio.pdf)
+👉 [View Full Diagram](Docs/System-Design.drawio.pdf)
 
-This diagram represents the main system interactions including user actions, AI integration, and backend processing.
+---
 
-⸻
-
-🚀 Features
+## 🚀 Features
 
 - Clean JSON structure optimized for mobile apps
+- AI Workout Generator
+- AI Diet Generator
+- Progress tracking system
 
-⸻
+---
 
-🔐 Authentication
--	Register / Login using Laravel Sanctum
--	Token-based authentication
+## 🔐 Authentication & Security
 
-⸻
+- Authentication using Laravel Sanctum
+- Token-based authentication
+- Users can only access their own data
+- Authorization checks on all endpoints
 
-💪 Workouts
--	Create, update, delete workouts
--	Track workout progress
--	Group workouts by day
+---
 
-⸻
+## 🗄️ Database Structure
 
-🧠 AI Workout Generator
+Main tables:
+- Users
+- Workouts
+- Workout Logs
+- Workout Plans
+- Diet Plans
 
-Generate a full workout plan using AI based on:
--	Goal (bulking, cutting, etc.)
--	Level (beginner, intermediate, advanced)
--	Number of days
+Relationships:
+User → Workouts → Logs  
+User → Workout Plans  
+User → Diet Plans
 
-- ✅ Stored in database
-- ✅ Returned grouped by day
+---
 
-⸻
+## 💪 Workouts
 
-🥗 AI Diet Generator
+- Create, update, delete workouts
+- Track workout progress
+- Group workouts by day
 
-Generate a diet plan using AI based on:
--	Goal
--	Weight
--	Number of meals
+---
 
-- ✅ Stored in database
-- ✅ Grouped by meals (Breakfast, Lunch…)
-- ✅ Includes total calories per meal
+## 🧠 AI Workout Generator
 
-📊 Example Diet Response
-```
+Generate workout plans based on:
+- Goal
+- Level
+- Number of days
+
+✔ Stored in database  
+✔ Grouped by day  
+
+---
+
+## 🥗 AI Diet Generator
+
+Generate diet plans based on:
+- Goal
+- Weight
+- Number of meals
+
+✔ Stored in database  
+✔ Grouped by meals  
+✔ Includes calories  
+
+### Example Response
+
+```json
 {
-    "Breakfast": {
-      "foods": [
-        { "name": "Oats", "calories": 300 },
-        { "name": "Banana", "calories": 100 }
-      ],
-      "total_calories": 400
-    }
+  "Breakfast": {
+    "foods": [
+      { "name": "Oats", "calories": 300 },
+      { "name": "Banana", "calories": 100 }
+    ],
+    "total_calories": 400
+  }
 }
 ```
-🛠️ Tech Stack
+
+## 🛠️ Tech Stack
+
 -	Laravel
 -	SQLite (can be switched to MySQL)
 -	Laravel Sanctum
 -	OpenRouter AI API
 
-  ⚙️ Installation
+## ⚙️ Installation
+
   ```
   git clone https://github.com/YOUR_USERNAME/gym-backend.git
-cd gym-backend
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-```
+  cd gym-backend
+  composer install
+  cp .env.example .env
+  php artisan key:generate
+  php artisan migrate
+  ```
 
-🔑 Environment Variables
+## 🔑 Environment Variables
 
 Add your OpenRouter API key:
 ```
 OPENROUTER_API_KEY=your_api_key_here
 ```
 
-▶️ Run Server
+## ▶️ Run Server
 ```
 php artisan serve
 ```
-📡 API Endpoints
+## 📡 API Endpoints
 
-Auth
+### Auth
 -	POST /api/register
 -	POST /api/login
 
-⸻
+---
 
-Workout AI
+### AI
 -	POST /api/ai/workout
-
-⸻
-
-Diet AI
 -	POST /api/ai/diet
 
-⸻
+---
 
-Diet Plans
+### Diet Plans
 -	GET /api/diet-plans
 -	GET /api/diet-plans/{id}
 
-⸻
+---
 
 📱 Next Step
 
 Frontend mobile app using Flutter.
 
-⸻
+---
 
 ## 👨‍💻 Author
 Siry - Backend Developer
