@@ -157,6 +157,3 @@ Frontend mobile app using Flutter.
 ## 👨‍💻 Author
 
 Siry - Backend Developer
-
-
-في تعديلات ؟؟
