@@ -29,35 +29,62 @@ class WorkoutController extends Controller
         return response()->json($workout, 201);
     }
 
-    public function show(Workout $workout)
+    public function show(Request $request, Workout $workout)
     {
+        if ($workout->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         return $workout;
     }
 
     public function update(Request $request, Workout $workout)
     {
-        $workout->update($request->all());
+        if ($workout->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $data = $request->validate([
+            'name' => 'string',
+            'description' => 'nullable|string',
+            'duration' => 'integer'
+        ]);
+
+        $workout->update($data);
+
         return $workout;
     }
 
-    public function destroy(Workout $workout)
+    public function destroy(Request $request, Workout $workout)
     {
+        if ($workout->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $workout->delete();
 
         return response()->json([
-            'message' => 'Deleted'
+            'message' => 'Workout deleted successfully'
         ]);
     }
 
-    public function progress($id)
+    public function progress(Request $request, $id)
     {
-        $logs = WorkoutLog::where('workout_id', $id)->get();
+    $workout = Workout::where('id', $id)
+        ->where('user_id', $request->user()->id)
+        ->first();
 
-        return response()->json([
-            'workout_id' => $id,
-            'total_sessions' => $logs->count(),
-            'best_weight' => $logs->max('weight'),
-            'last_session' => $logs->sortByDesc('performed_at')->first()
-        ]);
+    if (!$workout) {
+        return response()->json(['message' => 'Workout not found'], 404);
+    }
+
+    $logs = $workout->logs;
+
+    return response()->json([
+        'workout_id' => $id,
+        'total_sessions' => $logs->count(),
+        'best_weight' => $logs->max('weight'),
+        'last_session' => $logs->sortByDesc('performed_at')->first()
+    ]);
     }
 }

@@ -1,159 +1,162 @@
-# Gym Backend API
+# 🏋️ Gym Backend API (Laravel)
 
-A RESTful backend API for a fitness tracking application built with Laravel.
-
-This project was developed as part of a System Analysis course and demonstrates how a backend system can manage workouts, training logs, progress tracking, and diet plans for a fitness application.
-
----
-
-## Project Overview
-
-The Gym Backend API provides a structured backend system that allows fitness applications (mobile or web) to manage user training data efficiently.
-
-The system allows users to:
-
-- Register and login securely
-- Manage workouts
-- Log workout sessions
-- Track training progress
-- Create workout plans
-- Create diet plans
-
-The API follows RESTful architecture and returns JSON responses for easy integration with frontend applications.
+Designed for scalability, clean architecture, and real-world API usage.
+A RESTful backend system for a fitness application that allows users to manage workouts, track progress, and generate AI-powered workout and diet plans.
 
 ---
 
-## Tech Stack
+## 📌 Project Overview
 
-Framework  
-- Laravel
+A RESTful backend API built with Laravel for a fitness application that manages workouts, tracks progress, and generates AI-powered workout and diet plans.
 
-Authentication  
-- Laravel Sanctum
-
-Database  
-- SQLite
-
-Architecture  
-- RESTful API
-
-Development Tools  
-- Git  
-- GitHub  
-- Postman
+This project was developed as part of a System Analysis course.
 
 ---
 
-## System Architecture
+## 📊 System Design
 
-The system follows a layered backend architecture:
+![System Design](Docs/screen_system.drawio.png)
 
-Client Application (Mobile / Web)  
-↓  
-API Routes  
-↓  
-Controllers  
-↓  
-Models  
-↓  
-Database
-
-This structure separates responsibilities and keeps the code maintainable and scalable.
+👉 [View Full Diagram](Docs/System-Design.drawio.pdf)
 
 ---
 
-## Database Structure
+## 🚀 Features
 
-The system includes the following main tables:
-
-Users  
-Workouts  
-Workout Logs  
-Workout Plans  
-Diet Plans
-
-Relationships:
-
-User  
-├── Workouts  
-│   └── Workout Logs  
-├── Workout Plans  
-└── Diet Plans
+- RESTful API ready for mobile integration
+- Clean JSON structure optimized for mobile apps
+- AI Workout Generator
+- AI Diet Generator
+- Progress tracking system
 
 ---
 
-## Authentication
+## 🔐 Authentication & Security
 
-Authentication is implemented using **Laravel Sanctum**.
-
-The API uses token-based authentication to secure endpoints.
-
-Endpoints:
-
-POST /api/register  
-POST /api/login  
-POST /api/logout
-
-After login, users receive an authentication token used to access protected routes.
+- Authentication using Laravel Sanctum
+- Token-based authentication
+- Users can only access their own data
+- Authorization checks on all endpoints
 
 ---
 
-## API Endpoints
+## 🗄️ Database Structure
 
-### Workouts
+Main tables:
+- Users
+- Workouts
+- Workout Logs
+- Workout Plans
+- Diet Plans
 
-GET /api/workouts  
-Retrieve all workouts
-
-POST /api/workouts  
-Create a new workout
-
-PUT /api/workouts/{id}  
-Update a workout
-
-DELETE /api/workouts/{id}  
-Delete a workout
+Relationships:  
+User → Workouts → Logs  
+User → Workout Plans  
+User → Diet Plans  
 
 ---
 
-### Workout Logs
+## 💪 Workouts
 
-POST /api/logs  
-Create a workout log
-
-GET /api/logs  
-Retrieve workout logs
-
-Stored data includes:
-
-- weight
-- reps
-- sets
-- performed_at
+- Create, update, delete workouts
+- Track workout progress
+- Group workouts by day
 
 ---
 
-### Progress Tracking
+## 🧠 AI Workout Generator
 
-GET /api/workouts/{id}/progress
+Generate workout plans based on:
+- Goal
+- Level
+- Number of days
 
-Returns:
+✔ Stored in database  
+✔ Grouped by day  
 
-- total_sessions
-- best_weight
-- last_session
+---
 
-Example response:
+## 🥗 AI Diet Generator
+
+Generate diet plans based on:
+- Goal
+- Weight
+- Number of meals
+
+✔ Stored in database  
+✔ Grouped by meals  
+✔ Includes calories  
+
+### Example Response
 
 ```json
 {
-  "workout_id": 1,
-  "total_sessions": 3,
-  "best_weight": 90,
-  "last_session": {
-    "weight": 90,
-    "reps": 8,
-    "sets": 4,
-    "performed_at": "2026-03-09"
+  "Breakfast": {
+    "foods": [
+      { "name": "Oats", "calories": 300 },
+      { "name": "Banana", "calories": 100 }
+    ],
+    "total_calories": 400
   }
 }
+```
+
+## 🛠️ Tech Stack
+-	Laravel
+-	SQLite (can be switched to MySQL)
+-	Laravel Sanctum
+-	OpenRouter AI API
+
+## ⚙️ Installation
+
+```
+git clone https://github.com/Siry001/project_backend.git
+cd gym-backend
+composer install
+```
+cp .env.example .env
+```
+php artisan key:generate
+php artisan migrate
+```
+
+## 🔑 Environment Variables
+
+```
+OPENROUTER_API_KEY=your_api_key_here
+```
+
+## ▶️ Run Server
+
+```
+php artisan serve
+```
+
+## 📡 API Endpoints
+
+### Auth
+-	POST /api/register
+-	POST /api/login
+
+### AI
+-	POST /api/ai/workout
+-	POST /api/ai/diet
+
+### Diet Plans
+-	GET /api/diet-plans
+-	GET /api/diet-plans/{id}
+
+---
+
+## 📱 Next Step
+
+Frontend mobile app using Flutter.
+
+---
+
+## 👨‍💻 Author
+
+Siry - Backend Developer
+
+
+في تعديلات ؟؟
