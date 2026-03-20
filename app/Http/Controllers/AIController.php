@@ -8,6 +8,8 @@ use App\Models\WorkoutPlan;
 use App\Models\Workout;
 use App\Models\DietPlan;
 use App\Models\Diet;
+use App\Models\AIDiet;
+
 
 class AIController extends Controller
 {
@@ -176,5 +178,24 @@ class AIController extends Controller
             'plan_id' => $plan->id,
             'diet' => $grouped
         ]);
+    }
+
+    public function generateDiet(Request $request)
+    {
+        $result = app(\App\Services\AIService::class)
+            ->generateDiet(
+                $request->goal,
+                $request->weight,
+                $request->meals
+            );
+
+        if ($result['success']) {
+            AIDiet::create([
+                'user_id' => $request->user()->id,
+                'response' => json_encode($result['data'])
+            ]);
+        }
+
+        return response()->json($result);
     }
 }

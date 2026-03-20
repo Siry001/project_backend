@@ -7,42 +7,55 @@ use App\Models\WorkoutPlan;
 
 class WorkoutPlanController extends Controller
 {
+    public function __construct()
+    {
+       $this->authorizeResource(WorkoutPlan::class, 'Plan');
+    }
+
+    // ================= INDEX =================
     public function index(Request $request)
     {
         return $request->user()
             ->workoutPlans()
             ->with('workouts')
-            ->get();
+            ->latest()
+            ->paginate(10);
     }
 
+    // ================= STORE =================
     public function store(Request $request)
     {
         $data = $request->validate([
-            'plan_text' => 'required|string'
+            'plan_text' => 'required|string|max:5000'
         ]);
 
-        $data['user_id'] = $request->user()->id;
-
-        $plan = WorkoutPlan::create($data);
+        // 👇 دي الصح 100%
+        $plan = $request->user()->workoutPlans()->create($data);
 
         return response()->json($plan, 201);
     }
 
-    public function show(Request $request, WorkoutPlan $workoutPlan)
+    // ================= SHOW =================
+    public function show(WorkoutPlan $workoutPlan)
     {
-        if ($workoutPlan->user_id !== $request->user()->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        return $workoutPlan->load('workouts');
+        dd($workoutPlan);
     }
 
-    public function destroy(Request $request, WorkoutPlan $workoutPlan)
+    // ================= UPDATE =================
+    public function update(Request $request, WorkoutPlan $workoutPlan)
     {
-        if ($workoutPlan->user_id !== $request->user()->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        $data = $request->validate([
+            'plan_text' => 'required|string|max:5000'
+        ]);
 
+        $workoutPlan->update($data);
+
+        return response()->json($workoutPlan);
+    }
+
+    // ================= DELETE =================
+    public function destroy(WorkoutPlan $workoutPlan)
+    {
         $workoutPlan->delete();
 
         return response()->json([

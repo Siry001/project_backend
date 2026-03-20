@@ -1,159 +1,188 @@
-# 🏋️ Gym Backend API (Laravel)
+# 📌 Gym Backend API - Authorization System
 
-Designed for scalability, clean architecture, and real-world API usage.
-A RESTful backend system for a fitness application that allows users to manage workouts, track progress, and generate AI-powered workout and diet plans.
+## 📖 Overview
 
----
-
-## 📌 Project Overview
-
-A RESTful backend API built with Laravel for a fitness application that manages workouts, tracks progress, and generates AI-powered workout and diet plans.
-
-This project was developed as part of a System Analysis course.
+This project is a RESTful backend for a Gym Management System built using Laravel.
+It includes authentication, workout plans, and authorization using Laravel Policies.
 
 ---
 
-## 📊 System Design
+## 📊 Architecture Diagram
 
-![System Design](Docs/screen_system.drawio.png)
-
-👉 [View Full Diagram](Docs/System-Design.drawio.pdf)
+![Architecture](Docs/architecture.png)
 
 ---
 
-## 🚀 Features
+## 📁 Project Structure
 
-- RESTful API ready for mobile integration
-- Clean JSON structure optimized for mobile apps
-- AI Workout Generator
-- AI Diet Generator
-- Progress tracking system
+app/
+ ├── Models/
+ │   ├── User.php
+ │   └── WorkoutPlan.php
+ │
+ ├── Policies/
+ │   └── WorkoutPlanPolicy.php
+ │
+ ├── Http/
+ │   └── Controllers/
+ │       └── WorkoutPlanController.php
+ │
+ └── Providers/
+     └── AuthServiceProvider.php
 
----
+routes/
+ └── api.php
 
-## 🔐 Authentication & Security
+database/
+ └── migrations/
 
-- Authentication using Laravel Sanctum
-- Token-based authentication
-- Users can only access their own data
-- Authorization checks on all endpoints
-
----
-
-## 🗄️ Database Structure
-
-Main tables:
-- Users
-- Workouts
-- Workout Logs
-- Workout Plans
-- Diet Plans
-
-Relationships:  
-User → Workouts → Logs  
-User → Workout Plans  
-User → Diet Plans  
+config/
+ └── sanctum.php
 
 ---
 
-## 💪 Workouts
+## 🔐 Authentication
 
-- Create, update, delete workouts
-- Track workout progress
-- Group workouts by day
+Authentication is implemented using Laravel Sanctum, enabling secure token-based access.
 
----
+### Features
 
-## 🧠 AI Workout Generator
-
-Generate workout plans based on:
-- Goal
-- Level
-- Number of days
-
-✔ Stored in database  
-✔ Grouped by day  
+- User Registration  
+- User Login  
+- API Token Generation  
+- Protected routes using middleware  
 
 ---
 
-## 🥗 AI Diet Generator
+## 🧠 Authorization (Core Feature)
 
-Generate diet plans based on:
-- Goal
-- Weight
-- Number of meals
+Authorization is implemented using Laravel Policies to enforce ownership-based access control.
 
-✔ Stored in database  
-✔ Grouped by meals  
-✔ Includes calories  
+Each user is only allowed to access and manage their own workout plans.
 
-### Example Response
 
-```json
+## 🎯 Objective
+
+Ensure that each authenticated user can only:
+-	Access their own workout plans
+-	Modify or delete only their own data
+
+---
+
+## 🏗 System Implementation
+
+### 1. Policy Creation
+
+```
+php artisan make:policy WorkoutPlanPolicy --model=WorkoutPlan
+```
+
+
+### 2. Authorization Logic
+```
+public function view(User $user, WorkoutPlan $workoutPlan): bool
 {
-  "Breakfast": {
-    "foods": [
-      { "name": "Oats", "calories": 300 },
-      { "name": "Banana", "calories": 100 }
-    ],
-    "total_calories": 400
-  }
+    return $user->id === $workoutPlan->user_id;
 }
 ```
 
-## 🛠️ Tech Stack
+
+
+### 3. Policy Registration
+
+Policies are registered inside:
+```
+app/Providers/AuthServiceProvider.php
+```
+```
+protected $policies = [
+    WorkoutPlan::class => WorkoutPlanPolicy::class,
+];
+```
+
+
+### 4. Controller Protection
+```
+public function __construct()
+{
+    $this->authorizeResource(WorkoutPlan::class, 'plan');
+}
+```
+⚠️ Important: The parameter name (plan) must match the route parameter.
+
+
+### 5. Routes Protection
+```
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('plans', WorkoutPlanController::class);
+});
+```
+
+
+## ⚠️ Issues Faced & Solutions
+
+### ❌ Issue 1: 403 Unauthorized (with valid token)
+- Cause: Policy was not properly registered
+- Solution: Registered policy in AuthServiceProvider
+
+⸻
+
+### ❌ Issue 2: Authorization not triggered
+- Cause: Incorrect parameter name in authorizeResource
+- Solution:
+```
+'workoutPlan' ❌
+'plan' ✅
+```
+
+### ❌ Issue 3: Debugging Authorization Flow
+- Solution: Used dd() inside the policy to confirm execution
+
+---
+
+## 🧪 Testing
+
+Testing was performed using Postman.
+
+✔ Valid Scenario
+-	Authenticated user requests their own workout plan → 200 OK
+
+---
+
+## ❌ Invalid Scenario
+-	User requests another user’s workout plan
+→ 403 Forbidden
+
+---
+
+
+## 📸 API Screenshots
+
+### ✔ Create Plan (201 Created)
+![Create](Docs/screenshots/create.png)
+
+---
+
+### ✔ Authorized Request (200 OK)
+![200 OK](Docs/screenshots/200-success.png)
+
+---
+
+### ❌ Unauthorized Request (403 Forbidden)
+![403 Forbidden](Docs/screenshots/403-forbidden.png)
+
+---
+
+## 🚀 Final Result
+-	Secure and scalable API architecture
+-	Proper implementation of Laravel Policies
+-	Clean separation between authentication and authorization
+-	Fully protected RESTful endpoints
+
+---
+
+## 🧩 Technologies Used
 -	Laravel
--	SQLite (can be switched to MySQL)
 -	Laravel Sanctum
--	OpenRouter AI API
-
-## ⚙️ Installation
-
-```
-git clone https://github.com/Siry001/project_backend.git
-cd gym-backend
-composer install
-```
-cp .env.example .env
-```
-php artisan key:generate
-php artisan migrate
-```
-
-## 🔑 Environment Variables
-
-```
-OPENROUTER_API_KEY=your_api_key_here
-```
-
-## ▶️ Run Server
-
-```
-php artisan serve
-```
-
-## 📡 API Endpoints
-
-### Auth
--	POST /api/register
--	POST /api/login
-
-### AI
--	POST /api/ai/workout
--	POST /api/ai/diet
-
-### Diet Plans
--	GET /api/diet-plans
--	GET /api/diet-plans/{id}
-
----
-
-## 📱 Next Step
-
-Frontend mobile app using Flutter.
-
----
-
-## 👨‍💻 Author
-
-Siry - Backend Developer
+-	MySQL
+-	Postman
