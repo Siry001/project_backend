@@ -1,20 +1,41 @@
 # 📌 Gym Backend API - Authorization System
 
-## 📖 Overview
+A secure RESTful API built with Laravel, implementing authentication with Sanctum and authorization using Policies.
+
+
+## 📖 Project Overview
 
 This project is a RESTful backend for a Gym Management System built using Laravel.
 It includes authentication, workout plans, and authorization using Laravel Policies.
 
 ---
 
-## 📊 Architecture Diagram
+## 🏗 Architecture Diagram
 
-![Architecture](Docs/architecture.png)
+<p align="center">
+  <img src="Docs/architecture.png" width="700"/>
+</p>
+---
+
+## 🚀 Getting Started
+
+```bash
+git clone https://github.com/Siry001/project_backend.git
+cd project_backend
+
+composer install
+cp .env.example .env
+php artisan key:generate
+
+php artisan migrate
+
+php artisan serve
+```
 
 ---
 
 ## 📁 Project Structure
-
+```bash
 app/
  ├── Models/
  │   ├── User.php
@@ -38,7 +59,7 @@ database/
 
 config/
  └── sanctum.php
-
+```
 ---
 
 ## 🔐 Authentication
@@ -70,6 +91,7 @@ Ensure that each authenticated user can only:
 ---
 
 ## 🏗 System Implementation
+
 
 ### 1. Policy Creation
 
