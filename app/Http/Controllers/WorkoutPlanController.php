@@ -28,22 +28,22 @@ class WorkoutPlanController extends Controller
         return response()->json($plan, 201);
     }
 
-    public function show(Request $request, WorkoutPlan $workoutPlan)
+    public function show(Request $request, WorkoutPlan $plan)
     {
-        if ($workoutPlan->user_id !== $request->user()->id) {
+        if ($plan->user_id !== $request->user()->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        return $workoutPlan->load('workouts');
+        return $plan->load('workouts');
     }
 
-    public function destroy(Request $request, WorkoutPlan $workoutPlan)
+    public function destroy(Request $request, WorkoutPlan $plan)
     {
-        if ($workoutPlan->user_id !== $request->user()->id) {
+        if ($plan->user_id !== $request->user()->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $workoutPlan->delete();
+        $plan->delete();
 
         return response()->json([
             'message' => 'Plan deleted successfully'
