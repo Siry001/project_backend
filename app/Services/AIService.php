@@ -8,49 +8,48 @@ class AIService
 {
     private function callAI($prompt)
     {
-        $apiKey = env('OPENROUTER_API_KEY');
+        $apiKey = config('services.gemini.key');
 
         if (!$apiKey) {
             return [
                 'success' => false,
-                'error' => 'API key not found'
+                'error' => 'Gemini API key not found'
             ];
         }
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . trim($apiKey),
-            'Content-Type' => 'application/json',
-        ])->post('https://openrouter.ai/api/v1/chat/completions', [
-            "model" => "mistralai/mixtral-8x7b-instruct",
-            "messages" => [
-                [
-                    "role" => "system",
-                    "content" => "You are a strict JSON generator. Output ONLY valid JSON."
+        $response = Http::timeout(30)->post(
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . $apiKey,
+            [
+                'contents' => [
+                    [
+                        'parts' => [
+                            ['text' => $prompt]
+                        ]
+                    ]
                 ],
-                [
-                    "role" => "user",
-                    "content" => $prompt
+                'generationConfig' => [
+                    'temperature'      => 0.2,
+                    'responseMimeType' => 'application/json',
                 ]
-            ],
-            "temperature" => 0.2
-        ]);
+            ]
+        );
 
         $data = $response->json();
 
         if (isset($data['error'])) {
             return [
                 'success' => false,
-                'error' => $data['error']['message'] ?? 'AI error',
+                'error' => $data['error']['message'] ?? 'Gemini error',
                 'raw' => $data
             ];
         }
 
-        $text = $data['choices'][0]['message']['content'] ?? null;
+        $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? null;
 
         if (!$text) {
             return [
                 'success' => false,
-                'error' => 'Empty AI response',
+                'error' => 'Empty Gemini response',
                 'raw' => $data
             ];
         }

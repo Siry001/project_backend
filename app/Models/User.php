@@ -8,6 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Workout;
 use App\Models\WorkoutPlan;
+use App\Models\WorkoutLog;
 use App\Models\DietPlan;
 
 class User extends Authenticatable
@@ -43,6 +44,12 @@ class User extends Authenticatable
     public function workoutPlans()
     {
         return $this->hasMany(WorkoutPlan::class);
+    }
+
+    // علاقة المستخدم بسجلات التمرين
+    public function workoutLogs()
+    {
+        return $this->hasMany(WorkoutLog::class);
     }
 
     // علاقة المستخدم بخطط الدايت
