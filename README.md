@@ -21,6 +21,14 @@ This project was developed as part of a System Analysis course.
 
 ---
 
+## 📊 Class Diagram
+
+![Class Diagram](Docs/back-end_Class-Diagram.jpg)
+
+👉 [View Full Diagram](Docs/back-end_Class-Diagram.pdf)
+
+---
+
 ## 🚀 Features
 
 - RESTful API ready for mobile integration
