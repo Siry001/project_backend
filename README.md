@@ -15,7 +15,7 @@ This project was developed as part of a System Analysis course.
 
 ## 📊 System Design
 
-![System Design](Docs/screen_system.drawio.png)
+![System Design](Docs/new edit.drawio.png)
 
 👉 [View Full Diagram](Docs/System-Design.drawio.pdf)
 
