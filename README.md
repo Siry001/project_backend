@@ -103,7 +103,7 @@ Generate diet plans based on:
 
 ## 🛠️ Tech Stack
 -	Laravel
--	SQLite (can be switched to MySQL)
+-	SQLite (switched to Supabase)
 -	Laravel Sanctum
 -	OpenRouter AI API
 
