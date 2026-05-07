@@ -1,19 +1,83 @@
-# 🏋️ Gym Backend API (Laravel)
+# 🏋️ AI-Powered Gym Backend API (Laravel)
 
 Designed for scalability, clean architecture, and real-world API usage.
-A RESTful backend system for a fitness application that allows users to manage workouts, track progress, and generate AI-powered workout and diet plans.
+
+A RESTful backend system for a fitness application that allows users to manage workouts, track progress, and generate AI-powered workout and diet plans using AI APIs.
 
 ---
 
-## 📌 Project Overview
+# 📌 Project Overview
 
-A RESTful backend API built with Laravel for a fitness application that manages workouts, tracks progress, and generates AI-powered workout and diet plans.
+This project is a scalable RESTful backend API developed using Laravel for a modern AI-powered fitness application.
 
-This project was developed as part of a System Analysis course.
+The system enables users to:
+
+- Generate AI workout plans
+- Generate AI diet plans
+- Track workout progress
+- Manage workout logs
+- Access personalized fitness recommendations
+- Securely authenticate using token-based authentication
+
+This project was developed as part of the **System Design and Analysis** course.
 
 ---
 
-## 📊 System Design
+# 🚀 Features
+
+- RESTful API architecture
+- AI Workout Generator
+- AI Diet Generator
+- Workout progress tracking
+- Secure authentication using Laravel Sanctum
+- Clean JSON responses optimized for frontend/mobile integration
+- Modular backend structure
+- Database-driven plan management
+
+---
+
+# 🛠️ Tech Stack
+
+- Laravel
+- React
+- SQLite (initially)
+- Supabase PostgreSQL
+- Laravel Sanctum
+- OpenRouter AI API
+- REST API Architecture
+
+---
+
+# 🔐 Authentication & Security
+
+- Token-based authentication using Laravel Sanctum
+- Protected API endpoints
+- User authorization checks
+- Secure user data isolation
+- Authenticated request validation
+
+---
+
+# 🗄️ Database Structure
+
+## Main Tables
+
+- Users
+- Workouts
+- Workout Logs
+- Workout Plans
+- Diet Plans
+
+## Relationships
+
+- User → Workouts
+- User → Workout Logs
+- User → Workout Plans
+- User → Diet Plans
+
+---
+
+# 📊 System Design
 
 ![System Design](Docs/new_edit.drawio.png)
 
@@ -21,7 +85,7 @@ This project was developed as part of a System Analysis course.
 
 ---
 
-## 📊 Class Diagram
+# 🧩 Class Diagram
 
 ![Class Diagram](Docs/back-end_Class-Diagram.jpg)
 
@@ -29,73 +93,112 @@ This project was developed as part of a System Analysis course.
 
 ---
 
-## 🚀 Features
+# 🏗️ Deployment Diagram
 
-- RESTful API ready for mobile integration
-- Clean JSON structure optimized for mobile apps
-- AI Workout Generator
-- AI Diet Generator
-- Progress tracking system
+This deployment diagram illustrates the communication between the frontend client, hosting services, Laravel backend server, and Supabase database.
+
+![Deployment Diagram](Docs/Deployment_diagram.jpg)
 
 ---
 
-## 🔐 Authentication & Security
+# 🔄 Sequence Diagrams
 
-- Authentication using Laravel Sanctum
-- Token-based authentication
-- Users can only access their own data
-- Authorization checks on all endpoints
+## 1️⃣ User Registration Sequence
 
----
+Illustrates the registration workflow using Laravel Sanctum authentication.
 
-## 🗄️ Database Structure
-
-Main tables:
-- Users
-- Workouts
-- Workout Logs
-- Workout Plans
-- Diet Plans
-
-Relationships:  
-User → Workouts → Logs  
-User → Workout Plans  
-User → Diet Plans  
+![User Registration Sequence](Docs/User_Regstration_sequence.drawio.png)
 
 ---
 
-## 💪 Workouts
+## 2️⃣ User Login Sequence
 
-- Create, update, delete workouts
-- Track workout progress
+Shows how users authenticate and receive access tokens.
+
+![User Login Sequence](Docs/User_login_sequence.drawio.png)
+
+---
+
+## 3️⃣ AI Workout Generation Sequence
+
+Demonstrates how the system generates personalized workout plans using AI services.
+
+![Workout Generation Sequence](Docs/Generate_workout_sequence.drawio.png)
+
+---
+
+## 4️⃣ AI Diet Plan Generation Sequence
+
+Illustrates the AI-powered diet generation workflow and calories calculation process.
+
+![Diet Generation Sequence](Docs/Genrate_Diet_plan_sequence.drawio.png)
+
+---
+
+## 5️⃣ View Diet Plans Sequence
+
+Shows how authenticated users retrieve stored diet plans from the database.
+
+![View Diet Plans Sequence](Docs/View_Diet_plan_sequence.drawio.png)
+
+---
+
+## 6️⃣ Workout Progress Tracking Sequence
+
+Illustrates workout logging and progress tracking workflow.
+
+![Workout Progress Tracking Sequence](Docs/Workout_progress_tracking_sequence.drawio.png)
+
+---
+
+# 💪 Workout Management
+
+The system supports:
+
+- Create workouts
+- Update workouts
+- Delete workouts
 - Group workouts by day
+- Track workout performance
+- Store workout logs
 
 ---
 
-## 🧠 AI Workout Generator
+# 🧠 AI Workout Generator
 
-Generate workout plans based on:
+Generate workout plans dynamically based on:
+
 - Goal
-- Level
-- Number of days
+- Fitness level
+- Number of workout days
 
+### Features
+
+✔ Personalized recommendations  
+✔ Organized by workout day  
 ✔ Stored in database  
-✔ Grouped by day  
+✔ AI-generated responses  
 
 ---
 
-## 🥗 AI Diet Generator
+# 🥗 AI Diet Generator
 
-Generate diet plans based on:
+Generate AI-powered meal plans based on:
+
 - Goal
 - Weight
 - Number of meals
 
-✔ Stored in database  
-✔ Grouped by meals  
-✔ Includes calories  
+### Features
 
-### Example Response
+✔ Calories calculation  
+✔ Meal grouping  
+✔ Personalized recommendations  
+✔ Stored in database  
+
+---
+
+# 📦 Example JSON Response
 
 ```json
 {
@@ -107,61 +210,3 @@ Generate diet plans based on:
     "total_calories": 400
   }
 }
-```
-
-## 🛠️ Tech Stack
--	Laravel
--	SQLite (switched to Supabase)
--	Laravel Sanctum
--	OpenRouter AI API
-
-## ⚙️ Installation
-
-```
-git clone https://github.com/Siry001/project_backend.git
-cd gym-backend
-composer install
-```
-cp .env.example .env
-```
-php artisan key:generate
-php artisan migrate
-```
-
-## 🔑 Environment Variables
-
-```
-OPENROUTER_API_KEY=your_api_key_here
-```
-
-## ▶️ Run Server
-
-```
-php artisan serve
-```
-
-## 📡 API Endpoints
-
-### Auth
--	POST /api/register
--	POST /api/login
-
-### AI
--	POST /api/ai/workout
--	POST /api/ai/diet
-
-### Diet Plans
--	GET /api/diet-plans
--	GET /api/diet-plans/{id}
-
----
-
-## 📱 Next Step
-
-Frontend mobile app using Flutter.
-
----
-
-## 👨‍💻 Author
-
-Siry - Backend Developer
