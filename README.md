@@ -85,6 +85,75 @@ This project was developed as part of the **System Design and Analysis** course.
 
 ---
 
+# 🧩 Component Diagram
+
+The component diagram illustrates the layered architecture of the system and the communication between frontend components, backend services, database modules, authentication services, and external AI APIs.
+
+The system architecture is divided into:
+
+- Frontend Layer (React)
+- Backend Layer (Laravel API)
+- Authentication Layer (Laravel Sanctum)
+- Database Layer (Supabase PostgreSQL)
+- External AI Service Layer (OpenRouter AI API)
+
+## Frontend Components
+
+- Authentication UI
+- Workout Management UI
+- Progress Tracking UI
+- Diet Management UI
+
+These modules communicate with the Laravel REST API to manage user interactions and fitness workflows.
+
+## Backend Components
+
+### Controllers
+
+- Auth Controller
+- Workout Controller
+- Diet Controller
+- AI Controller
+
+### Services
+
+- Authentication Service
+- Workout Service
+- Diet Service
+- AI Service Handler
+
+The backend layer handles:
+
+- Business logic
+- Request validation
+- Authentication & authorization
+- AI request handling
+- Database communication
+
+## Database Components
+
+The application stores data using Supabase PostgreSQL with the following tables:
+
+- Users Table
+- Workout Logs Table
+- Workout Plans Table
+- Diet Plans Table
+
+## External Services
+
+- OpenRouter AI API
+
+Used for generating:
+
+- AI workout plans
+- AI diet plans
+
+## Component Diagram
+
+![Component Diagram](Docs/Component_diagram.drawio.png)
+
+---
+
 # 🧩 Class Diagram
 
 ![Class Diagram](Docs/back-end_Class-Diagram.jpg)
@@ -210,3 +279,70 @@ Generate AI-powered meal plans based on:
     "total_calories": 400
   }
 }
+```
+
+---
+
+# 📡 API Endpoints
+
+## Authentication
+
+- POST `/api/register`
+- POST `/api/login`
+
+## AI Endpoints
+
+- POST `/api/ai/workout`
+- POST `/api/ai/diet`
+
+## Diet Plans
+
+- GET `/api/diet-plans`
+- GET `/api/diet-plans/{id}`
+
+---
+
+# ⚙️ Installation
+
+```bash
+git clone https://github.com/Siry001/project_backend.git
+cd gym-backend
+composer install
+```
+
+```bash
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+```
+
+---
+
+# 🔑 Environment Variables
+
+```env
+OPENROUTER_API_KEY=your_api_key_here
+```
+
+---
+
+# ▶️ Run Server
+
+```bash
+php artisan serve
+```
+
+---
+
+# 📱 Future Improvements
+
+- Flutter mobile application
+- Real-time analytics dashboard
+- AI chatbot fitness assistant
+- Exercise video integration
+- Smart recommendation engine
+- Subscription & payment system
+
+---
+
+# 👨‍💻 Author
