@@ -87,7 +87,6 @@ This project was developed as part of the **System Design and Analysis** course.
 
 # 🧩 Component Diagram
 
-
 ![Component Diagram](Docs/Component_diagram.drawio.png)
 👉 [View Full Diagram](Docs/Component_diagram.drawio.png)
 
