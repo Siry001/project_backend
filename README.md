@@ -284,4 +284,4 @@ php artisan serve
 ---
 
 # 👨‍💻 Author
-## siry
+Siry — Backend Developer
